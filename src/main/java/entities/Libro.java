@@ -1,0 +1,27 @@
+package entities;
+
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
+@Entity
+@Table(name = "libros")
+@Getter
+@Setter
+@NamedQueries({
+        @NamedQuery(name = "libros",
+                query = "SELECT l FROM Libro l")
+})
+public class Libro {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(name = "titulo", length = 150, nullable = false)
+    private String titulo;
+
+    private int añoPub;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "categoria_id")
+    private Categoria categoria;
+}
